@@ -97,8 +97,18 @@ async def rooms(interaction: discord.Interaction):
         
         # Add each room's information to the embed
         for room in rooms:
-            room_info = f"{room['current_people_count']}/{room['max_people_count']} users"
-            embed.add_field(name=f"{room['room_name']} (ID: {room['room_id']})", value=room_info, inline=False)
+            room_name = room['room_name']
+            room_id = room['room_id']
+            user_count = f"{room['current_people_count']}/{room['max_people_count']}"
+            join_link = f"https://talkomatic.co/html/chatroom.html?roomId={room_id}"
+            
+            room_info = (
+                f"**Room Name:** {room_name}\n"
+                f"**Room ID:** {room_id}\n"
+                f"**Users:** {user_count}\n"
+                f"**Join:** [Click here to join]({join_link})"
+            )
+            embed.add_field(name="\u200b", value=room_info, inline=False)  # \u200b is a zero-width space
         
         # If there are no rooms, add a message to the embed
         if not rooms:
